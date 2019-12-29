@@ -20,7 +20,7 @@
     #define MAX_DOTS_START NUM_PIXELS_START
   #endif
 
-  //#include DEVICE_MANAGER_H
+  #include DEVICE_MANAGER_H
   
   
   #define SO_ENABLED
