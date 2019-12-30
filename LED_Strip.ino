@@ -30,7 +30,7 @@ int staticLedPosition = NUM_LEDS_START / 2 + 1;
 int ledNumLimit = NUM_LEDS_START;
 int delayCycles = DELAY_CYCLES;
 
-int switchLeftRight = -1;   // 1 = primo pixel a sx  -  -1 = primo pixel a dx
+int switchLeftRight = -1;   // 1 = primo pixel a sx,  -1 = primo pixel a dx
 
 int speed = 1;
 int nSpeed = 0;

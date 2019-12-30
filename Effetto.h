@@ -25,15 +25,16 @@ class Attuatore {
   int verso = 1;
   Pix *pix;
 
+  void backAndForth(int extra);
+  void backAndForth(int low, int high);
+  bool posizioneValida(int posizione);
+
   public:
   //static int minimo, massimo;
   Attuatore();
   Attuatore(Pix *pix);
   Attuatore(Pix *pix, int posizione, int verso, int speed);
   
-  void backAndForth(int extra);
-  void backAndForth(int low, int high);
-  bool posizioneValida(int posizione);
 
   virtual void update() = 0;
   virtual void draw() = 0;
