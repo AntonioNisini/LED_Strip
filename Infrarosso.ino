@@ -28,8 +28,9 @@ Effetto *getAnimation(int idx) {
   Effetto *e;
     
   int cAnimation = 1;
-  if (idx == cAnimation++) e = &ec;
+  /* */ if (idx == cAnimation++) e = &ec;
   else if (idx == cAnimation++) e = &es; 
+  else if (idx == cAnimation++) e = &eo; 
   else e = 0;
   return e;  
 }

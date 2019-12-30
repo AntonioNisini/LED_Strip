@@ -64,9 +64,9 @@
 
   #define SPEED_INTERVAL         10
 
-  #define NUMERO_EFFETTI          2
+  #define NUMERO_EFFETTI          3
 
-  #define DELAY_CYCLES           50
+  #define DELAY_CYCLES           25
 
   extern int ledNumLimit;
   extern int delayCycles;
@@ -129,6 +129,19 @@
       b = pix.b;
     }
 
+    inline void addRGB(uint8_t nr, uint8_t ng, uint8_t nb) __attribute__((always_inline)) {
+      r = max((uint8_t) 255, r + nr);
+      g = max((uint8_t) 255, g + ng);
+      b = max((uint8_t) 255, b + nb);
+    }
+
+    inline void addRGB(Pix pix) __attribute__((always_inline)) {
+      //Serial.print("a");
+      uint16_t v = r; v += pix.r; r = min(255, v);
+               v = g; v += pix.g; g = min(255, v);
+               v = b; v += pix.b; b = min(255, v);
+    }
+
     inline void setHSV(uint8_t nh, uint8_t ns, uint8_t nv) __attribute__((always_inline)) {
       h = nh;
       s = ns;
@@ -142,10 +155,18 @@
     }
 
     void RGB2HSV() {
-      float nr, ng, nb, nh, ns, nv;
-      nr = r; ng = g; nb = b; 
+      //Serial.print("r");
+      float nr = r;
+      float ng = g;
+      float nb = b;
+      float nh = 0;
+      float ns = 0;
+      float nv = 0;
+      //Serial.print(String(nr) + "," + String(ng) + "," + String(nb) + "->");
       RGBtoHSV(nr, ng, nb, nh, ns, nv);
-      h = nh; s = 255 * ns; v = nv;
+      //Serial.print(String(nh) + "," + String(ns) + "," + String(nv) + "=");
+      h = static_cast<uint16_t>(nh); s = static_cast<uint8_t>(ns * 255); v = static_cast<uint8_t>(nv);
+      //Serial.println(String(h) + "," + String(s) + "," + String(v));
     }
     
     void RGBtoHSV(float& fR, float& fG, float fB, float& fH, float& fS, float& fV) {

@@ -11,6 +11,7 @@
 
 #define POSIZIONE       0
 #define SPEED           1
+#define COLOR_CYCLE  1000
 
 /*******************
  * Classe Attuatore
@@ -27,19 +28,11 @@ class Attuatore {
   public:
   //static int minimo, massimo;
   Attuatore();
+  Attuatore(Pix *pix);
   Attuatore(Pix *pix, int posizione, int verso, int speed);
-
-  /*
-  int getPosizione();
-  int getVerso();
-  int getSpeed();
-
-  void setPosizione(int posizione);
-  void setVerso(int verso);
-  void setSpeed(int speed);
-  */
   
   void backAndForth(int extra);
+  void backAndForth(int low, int high);
   bool posizioneValida(int posizione);
 
   virtual void update() = 0;
@@ -84,11 +77,12 @@ class Effetto {
 class EffettoAttuatori : public Effetto {
 
   protected:
+  int nAttuatori;
   Attuatore *attuatori;
   
   public:
   EffettoAttuatori();
-  EffettoAttuatori(Attuatore *attuatori, Pix *pix, int posizione, int speed);
+  EffettoAttuatori(Attuatore *attuatori, int nAttuatori, Pix *pix, int posizione, int speed);
 
   virtual void update();
   virtual void manageSubCommand(long key) = 0;

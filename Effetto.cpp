@@ -13,19 +13,19 @@ Attuatore::Attuatore() {
   this->verso = VERSO;
   this->speed = SPEED;
 }
+Attuatore::Attuatore(Pix *pix) {
+  this->posizione = POSIZIONE;
+  this->verso = VERSO;
+  this->speed = SPEED;
+  this->pix = pix;
+}
 Attuatore::Attuatore(Pix *pix, int posizione, int verso, int speed) {
   this->posizione = posizione;
   this->verso = verso;
   this->speed = speed;
   this->pix = pix;
 }
-/*
-int Attuatore::getPosizione() { return this->posizione; }
-int Attuatore::getSpeed() { return this->speed; }
 
-void Attuatore::setPosizione(int posizione) { this->posizione = posizione; }
-void Attuatore::setSpeed(int speed) { this->speed = speed; }
-*/
 void Attuatore::backAndForth(int extra) {
   this->posizione += this->verso;
   if ((this->posizione < 0 - extra) || (this->posizione > MAX_PIXELS + extra)) {
@@ -34,7 +34,18 @@ void Attuatore::backAndForth(int extra) {
   }
 }
 
+void Attuatore::backAndForth(int low, int high) {
+  //SO(String(low) + "," + String(high) + ":" + String(this->posizione) + "," + String(this->verso) + " ");
+  this->posizione += this->verso;
+  if ((this->posizione < low) || (this->posizione > high)) {
+    this->verso *= -1;
+    this->posizione += 2 * this->verso;
+  }
+  SON(String(this->posizione) + "." + String(this->verso));
+}
+
 boolean Attuatore::posizioneValida(int posizione) {
+  SO("p");
   return (((posizione < 0) || (posizione >= MAX_PIXELS)) ? false : true);
 }
 
@@ -44,9 +55,7 @@ boolean Attuatore::posizioneValida(int posizione) {
  * Effetto
  **************/
 
-Effetto::Effetto() {
-  
-}
+Effetto::Effetto() {}
 Effetto::Effetto(Pix *pix, int posizione, int speed) {
   this->posizione = posizione;
   this->speed = speed;
@@ -63,6 +72,7 @@ void Effetto::update() {
   for (int i = 0; i < MAX_PIXELS; i++) {
     int value = (i == this->posizione) ? 1: 0;
     this->pix[i].setRGB(value, value, value);
+    this->pix[i].RGB2HSV();
   }
 }
 
@@ -91,6 +101,7 @@ void Effetto::fill(int start, int end, uint8_t r, uint8_t g, uint8_t b) {   // e
     this->pix[i].r = r;
     this->pix[i].g = g;
     this->pix[i].b = b;
+    this->pix[i].RGB2HSV();
   }
 }
 
@@ -104,9 +115,8 @@ bool Effetto::posizioneValida(int posizione) {
  * Classe EffettoAttuatori
  *************************/
 
-EffettoAttuatori::EffettoAttuatori() {
-  
-}
-EffettoAttuatori::EffettoAttuatori(Attuatore *attuatori, Pix *pix, int posizione, int speed) : Effetto(pix, posizione, speed) {
+EffettoAttuatori::EffettoAttuatori() {}
+EffettoAttuatori::EffettoAttuatori(Attuatore *attuatori, int nAttuatori, Pix *pix, int posizione, int speed) : Effetto(pix, posizione, speed) {
+  this->nAttuatori = nAttuatori;
   this->attuatori = attuatori;
 }
