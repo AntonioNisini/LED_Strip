@@ -9,7 +9,7 @@ Onda::Onda(Pix *pix, int ampiezza, int potenza, uint16_t hue) : Onda(pix, ampiez
 Onda::Onda(Pix *pix, int ampiezza, int potenza, uint16_t hue, int posizione, int verso, int speed) : Attuatore(pix, posizione,verso, speed) {
   this->ampiezza = ampiezza;
   this->potenza = potenza;
-  this->fattore = 1;
+  //this->fattore = 1;
   this->delta = potenza / ampiezza;
   this->baseHue = hue;
   this->color.setHSV(hue, 255, potenza);
@@ -28,14 +28,15 @@ void Onda::setHue(uint16_t hue) {
 
 void Onda::update() {
   //SO("u");
-  this->backAndForth(-this->ampiezza, MAX_PIXELS);
+  this->backAndForth(-this->ampiezza, MAX_PIXELS + this->ampiezza);
 }
 
 void Onda::draw() {
   //SO("d(" + String(this->ampiezza) + ") ");
   Pix deltaPix; 
   deltaPix.setHSV(this->color);
-  deltaPix.value = this->fattore * this->potenza;
+  deltaPix.value = this->potenza;
+  //deltaPix.value = this->fattore * this->potenza;
   deltaPix.HSV2RGB();
   for (int i = 0; i < this->ampiezza; i++) {
     if (this->posizioneValida(this->posizione + i)) {
@@ -48,7 +49,8 @@ void Onda::draw() {
       this->pix[this->posizione - i].RGB2HSV();
       //SON(PIX2STRING(this->pix[this->posizione + i]));
     }
-    deltaPix.value -= this->fattore * this->delta;
+    deltaPix.value -= this->delta;
+    //deltaPix.value -= this->fattore * this->delta;
     deltaPix.HSV2RGB();
   }
 }
@@ -83,12 +85,16 @@ void Effetto_Onde::update() {
     this->onde[i].update();
     this->onde[i].draw();
   }
+  for (int i = 0; i < MAX_PIXELS; i++) {
+    this->pix[i].value = this->fattore * this->pix[i].value;
+    this->pix[i].HSV2RGB();
+  }
 }
 
 void Effetto_Onde::aggiornaOnde() { 
   Serial.println(String("F: ") + this->fattore); 
   for (int i = 0; i < this->nOnde; i++) {
-    this->onde[i].fattore = this->fattore;
+    //this->onde[i].fattore = this->fattore;
     this->onde[i].setHue(this->hue); 
   }
 }

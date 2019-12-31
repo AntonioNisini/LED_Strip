@@ -21,7 +21,7 @@ class Onda : public Attuatore {
   private:
   int ampiezza;
   int potenza;
-  float fattore;
+  //float fattore;
   uint16_t baseHue;
   Pix color;
   uint8_t delta;

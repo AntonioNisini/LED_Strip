@@ -118,7 +118,7 @@ void LED_Controller::draw() {
 }
 
 void LED_Controller::draw(int delayCycles) {
-  SO("x");
+  //SO("x");
   for (int i = 0; i <  MAX_LEDS; i++) {
     this->leds[i].r = this->pix[i].r;
     this->leds[i].g = this->pix[i].g;
@@ -126,12 +126,12 @@ void LED_Controller::draw(int delayCycles) {
   }
 
   if (!IcanDraw()) {
-    SO("*");
+    //SO("*");
     return;
   }
   
   FastLED.show();
-  SO(".");
+  //SO(".");
   delay(delayCycles);
 }
 
