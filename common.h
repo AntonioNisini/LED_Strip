@@ -22,12 +22,15 @@
 
   #include DEVICE_MANAGER_H
   
+
+  #ifdef ARDUINO_IDE
+    #define string String
+  #endif
   
-  #define SO_ENABLED
+  //#define SO_ENABLED
   
   #ifdef SO_ENABLED
     #ifdef ARDUINO_IDE
-      #define string String
       #define SO(x) Serial.print(x) 
       #define SON(x) Serial.println(x) 
       #define SOF(x, y) Serial.print(x, y) 
@@ -136,7 +139,6 @@
     }
 
     inline void addRGB(Pix pix) __attribute__((always_inline)) {
-      //Serial.print("a");
       uint16_t v = r; v += pix.r; r = min(255, v);
                v = g; v += pix.g; g = min(255, v);
                v = b; v += pix.b; b = min(255, v);
@@ -155,18 +157,14 @@
     }
 
     void RGB2HSV() {
-      //Serial.print("r");
       float nr = r;
       float ng = g;
       float nb = b;
       float nh = 0;
       float ns = 0;
       float nv = 0;
-      //Serial.print(String(nr) + "," + String(ng) + "," + String(nb) + "->");
       RGBtoHSV(nr, ng, nb, nh, ns, nv);
-      //Serial.print(String(nh) + "," + String(ns) + "," + String(nv) + "=");
       h = static_cast<uint16_t>(nh); s = static_cast<uint8_t>(ns * 255); v = static_cast<uint8_t>(nv);
-      //Serial.println(String(h) + "," + String(s) + "," + String(v));
     }
     
     void RGBtoHSV(float& fR, float& fG, float fB, float& fH, float& fS, float& fV) {

@@ -51,21 +51,24 @@ bool stripIsEven = isEven(ledNumLimit);
 
 DEVICE_MANAGER dm(pix);
 Onda onde[] = {
-  Onda(pix, 1, 0),
-  Onda(pix, 2, 120),
-  Onda(pix, 3, 240)
+  Onda(pix,  3,  200,    0),
+  Onda(pix,  4,  180,  120),
+  Onda(pix,  5,  160,  240),
+  Onda(pix,  6,  140,  240),
+  Onda(pix,  7,  120,  120),
+  Onda(pix,  8,  100,    0)
 };
 
 Effetto_Corsa ec(pix, 10, 0, 1);
 Effetto_Sfumature es(pix, 1);
-Effetto_Onde eo(onde, 3, pix, 1);
+Effetto_Onde eo(onde, 6, pix, 1);
 
 void setup() {
 
   Serial.begin(250000);
   while (!Serial) ;
 
-  SON((String) PROGRAM_NAME + " " + VERSION);
+  Serial.println((String) PROGRAM_NAME + " " + VERSION);
 
   _SETUP_();
 

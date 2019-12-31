@@ -27,21 +27,24 @@ Attuatore::Attuatore(Pix *pix, int posizione, int verso, int speed) {
 }
 
 void Attuatore::backAndForth(int extra) {
+  this->backAndForth(-extra, MAX_PIXELS + extra);
+}
+
+void Attuatore::backAndForth(int extra, int leftOverflowPosition, int rightOverflowPosition) {
   this->posizione += this->verso;
   if ((this->posizione < 0 - extra) || (this->posizione > MAX_PIXELS + extra)) {
     this->verso *= -1;
-    this->posizione += 2 * this->verso;
+    if (verso == 1) this->posizione = leftOverflowPosition;
+    else this->posizione = rightOverflowPosition;
   }
 }
 
 void Attuatore::backAndForth(int low, int high) {
-  //SO(String(low) + "," + String(high) + ":" + String(this->posizione) + "," + String(this->verso) + " ");
   this->posizione += this->verso;
   if ((this->posizione < low) || (this->posizione > high)) {
     this->verso *= -1;
     this->posizione += 2 * this->verso;
   }
-  SON(String(this->posizione) + "." + String(this->verso));
 }
 
 boolean Attuatore::posizioneValida(int posizione) {

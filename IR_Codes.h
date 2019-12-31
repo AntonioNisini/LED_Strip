@@ -101,6 +101,7 @@
 #define KEY_HUE_LEFT           0xFF02FD  // C04
 #define KEY_CYAN               0xFF32CD  // C05
 #define KEY_HUE_RIGHT          0xFF20DF  // C06
+#define KEY_MIXED              0xFF00FF  // STROBE
 #define KEY_ALL_LEDS           0xFF00FF  // STROBE
 // Riga 5
 #define KEY_DESATURATE         0xFF50AF  // C07
@@ -109,9 +110,9 @@
 #define KEY_FADE               0xFF58A7  // FADE
 // Riga 6
 #define KEY_YELLOW             0xFF38C7  // C10
-#define KEY_BRIGHTER           0xFF28D7  // C11
+#define KEY_DARKER             0xFF28D7  // C11
 #define KEY_MAGENTA            0xFFF00F  // C12
-#define KEY_DARKER             0xFF30CF  // SMOOTH
+#define KEY_BRIGHTER           0xFF30CF  // SMOOTH
 
 #endif
 // ----------------------------------------------

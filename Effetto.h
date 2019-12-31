@@ -26,6 +26,7 @@ class Attuatore {
   Pix *pix;
 
   void backAndForth(int extra);
+  void backAndForth(int extra, int leftOverflowPosition, int rightOverflowPosition);
   void backAndForth(int low, int high);
   bool posizioneValida(int posizione);
 
